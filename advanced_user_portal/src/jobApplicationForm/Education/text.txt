@@ -1,0 +1,200 @@
+{/* Education level is 2 for 12th */}
+            {educationLevel.step > 1 && (
+              <>
+                <h4>12th Standard Details:</h4>
+
+                {/* Board */}
+                <div className="form-group">
+                  <label>Board: {renderRequiredAsterisk()}</label>
+                  <Controller
+                    name="12th.board"
+                    control={control}
+                    rules={{ required: "Board is required" }}
+                    render={({ field }) => (
+                      <>
+                        <Select
+                          {...field}
+                          options={[
+                            { value: "CBSE", label: "CBSE" },
+                            { value: "ICSE", label: "ICSE" },
+                            { value: "State Board", label: "State Board" },
+                            { value: "Other", label: "Other" },
+                          ]}
+                          className="select-bootstrap"
+                          styles={{
+                            control: (base) => ({
+                              ...base,
+                              cursor: "pointer",
+                            }),
+                          }}
+                        />
+                        {errors["12th"]?.board && (
+                          <span className="text-danger">
+                            {errors["12th"].board.message}
+                          </span>
+                        )}
+                      </>
+                    )}
+                  />
+                </div>
+
+                {/* Year of Passing */}
+                <div className="form-group">
+                  <label>Year of Passing: {renderRequiredAsterisk()}</label>
+                  <Controller
+                    name="12th.yearOfPassing"
+                    control={control}
+                    rules={{
+                      required: "Year of passing is required",
+                      validate: (value) => {
+                        return (
+                          Number(value.value) >=
+                            Number(passingYearOfHighSchool.value + 2) ||
+                          "Invalid year gap"
+                        );
+                      },
+                    }}
+                    render={({ field }) => (
+                      <>
+                        <Select
+                          {...field}
+                          options={Array.from({ length: 61 }, (_, i) => {
+                            const year = currentYear - i;
+                            return { value: year, label: year };
+                          })}
+                          className="select-bootstrap"
+                          styles={{
+                            control: (base) => ({
+                              ...base,
+                              cursor: "pointer",
+                            }),
+                          }}
+                        />
+                        {errors["12th"]?.yearOfPassing && (
+                          <span className="text-danger">
+                            {errors["12th"].yearOfPassing.message}
+                          </span>
+                        )}
+                      </>
+                    )}
+                  />
+                </div>
+
+                {/* Location Fields */}
+                <>
+                  <div className="form-group">
+                    <label>Country: {renderRequiredAsterisk()}</label>
+                    <Controller
+                      name="12th.country"
+                      control={control}
+                      rules={{ required: "Country is required" }}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          options={countryOptions}
+                          className={`react-select ${
+                            errors["12th"]?.country && "is-invalid"
+                          }`}
+                        />
+                      )}
+                    />
+                    {errors?.["12th"]?.country && (
+                      <div className="invalid-feedback">
+                        {errors["12th"].country.message}
+                      </div>
+                    )}
+                  </div>
+                  <div className="form-group">
+                    <label>State: {renderRequiredAsterisk()}</label>
+                    <Controller
+                      name="10th.state"
+                      control={control}
+                      rules={{ required: "State is required" }}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          options={stateOptions.filter(
+                            (state) =>
+                              state.country_id ===
+                              watch("12th.country")?.country_id
+                          )}
+                          isDisabled={!watch("12th.country")}
+                          className={`react-select ${
+                            errors["12th"]?.state && "is-invalid"
+                          }`}
+                        />
+                      )}
+                    />
+                    {errors?.["12th"]?.state && (
+                      <div className="invalid-feedback">
+                        {errors["12th"].state.message}
+                      </div>
+                    )}
+                  </div>
+                  <div className="form-group">
+                    <label>City: {renderRequiredAsterisk()}</label>
+                    <Controller
+                      name="12th.city"
+                      control={control}
+                      rules={{ required: "City is required" }}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          options={cityOptions.filter(
+                            (city) =>
+                              city.country_id === watch("12th.city")?.country_id
+                          )}
+                          isDisabled={!watch("12th.state")}
+                          className={`react-select ${
+                            errors["12th"]?.state && "is-invalid"
+                          }`}
+                        />
+                      )}
+                    />
+                    {errors?.["12th"]?.city && (
+                      <div className="invalid-feedback">
+                        {errors["12th"].city.message}
+                      </div>
+                    )}
+                  </div>
+                </>
+
+                {/* School Name */}
+                <div className="form-group">
+                  <label>School Name: {renderRequiredAsterisk()}</label>
+                  <input
+                    {...register("12th.school", {
+                      required: "School name is required",
+                    })}
+                    className="form-control"
+                  />
+                  {errors["12th"]?.school && (
+                    <span className="text-danger">
+                      {errors["12th"].school.message}
+                    </span>
+                  )}
+                </div>
+
+                {/* Percentage/CGPA */}
+                <div className="form-group">
+                  <label>Percentage/CGPA: {renderRequiredAsterisk()}</label>
+                  <input
+                    {...register("12th.cgpa", {
+                      required: "Percentage/CGPA is required",
+                      pattern: {
+                        value: /^[0-9]*\.?[0-9]*$/, // Allows numbers with optional decimal
+                        message: "Invalid format. Please enter a valid number",
+                      },
+                      validate: cgpaValidation,
+                    })}
+                    type="text"
+                    className="form-control"
+                  />
+                  {errors["12th"]?.cgpa && (
+                    <span className="text-danger">
+                      {errors["12th"].cgpa.message}
+                    </span>
+                  )}
+                </div>
+              </>
+)}

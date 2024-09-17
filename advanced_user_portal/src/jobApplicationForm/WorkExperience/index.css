@@ -1,0 +1,79 @@
+.work-experience {
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 60px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  .work-experience h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .fresher-section, .experience-details {
+    margin: 20px 0;
+  }
+  
+  .fresher-section label, .experience-details label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+  }
+  
+  .fresher-section select, .experience-details input, .experience-details textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .experience-details .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .date-picker {
+    display: inline-block;
+    width: 48%;
+  }
+  
+  .date-picker label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+  }
+  
+  .date-picker input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .experience-details textarea {
+    height: 100px;
+    resize: vertical;
+  }
+  
+  .add-experience-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .add-experience-button:hover {
+    background-color: #0056b3;
+  }
