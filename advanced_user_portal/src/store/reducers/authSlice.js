@@ -18,15 +18,12 @@ export const loginUser = createAsyncThunk(
     } catch (error) {
       toast.dismiss(toastId);
       if (error.response) {
-        // Server responded with a status other than 2xx
         toast.error(error.response.data.message || "An error occurred");
         return rejectWithValue(error.response.data);
       } else if (error.request) {
-        // Request was made but no response was received
         toast.error("Network error. Please try again later.");
         return rejectWithValue({ message: "Network error" });
       } else {
-        // Something happened in setting up the request
         toast.error("An unexpected error occurred.");
         return rejectWithValue({ message: "Unexpected error" });
       }
@@ -41,7 +38,7 @@ export const logoutUser = createAsyncThunk(
     try {
       await axios.post(process.env.REACT_APP_BASEURL + "/user/logout");
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response?.data || { message: "Logout failed" });
     }
   }
 );

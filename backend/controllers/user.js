@@ -419,9 +419,8 @@ exports.UserSignUp = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Invalid OTP",
-      });
     }
-
+  )}
     // Hash the password
     const hashPassword = await bcrypt.hash(password, 10);
 
@@ -436,10 +435,10 @@ exports.UserSignUp = async (req, res) => {
       accountType: "User",
     });
 
-    // Send confirmation email
+    // login confirmation email
     //FIXME: add Email Template.
     try {
-      await mailSender(
+      await mailloginer(
         email,
         "Aptitude Guru Hem",
         `<p>Account create Successfully. RMS`

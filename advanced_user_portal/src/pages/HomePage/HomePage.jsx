@@ -7,7 +7,7 @@ const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-`;
+`
 
 const MainContent = styled.main`
   flex-grow: 1;
