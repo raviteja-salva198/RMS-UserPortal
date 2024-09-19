@@ -2,8 +2,29 @@ import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { Bell, X } from "lucide-react";
 import jobRoles from "./jobroles.json";
-import { Container, FormBellContainer, SetPreferencesForm, FormGroup, InputFieldsContainer, BellIconContainer, AlertsPopup, AlertsPopupHeader, ClosePopupButton, AlertsList, PopupAlertItem, ClearAllButton, JobAlertsContainer, AlertItem } from './style';
-//the changes
+import {
+  Container,
+  FormBellContainer,
+  SetPreferencesForm,
+  FormGroup,
+  InputFieldsContainer,
+  BellIconContainer,
+  AlertsPopup,
+  AlertsPopupHeader,
+  ClosePopupButton,
+  AlertsList,
+  PopupAlertItem,
+  ClearAllButton,
+  JobAlertsContainer,
+  AlertItem,
+  StyledButton,
+  StyledInput,
+  StyledSelect,
+  NotificationBadge,
+  FormError,
+  NoAlertsMessage
+} from './style';
+
 const roleOptions = jobRoles.map((role) => ({ value: role, label: role }));
 
 const JobalertsComponent = () => {
@@ -18,6 +39,7 @@ const JobalertsComponent = () => {
   const [formError, setFormError] = useState("");
   const [notifications, setNotifications] = useState([]);
   const [postedJobs, setPostedJobs] = useState([]);
+
   useEffect(() => {
     const storedAlerts = JSON.parse(localStorage.getItem("jobAlerts")) || [];
     setAlerts(storedAlerts);
@@ -40,154 +62,100 @@ const JobalertsComponent = () => {
       console.error("Error fetching posted jobs:", error);
     }
   };
+
   const checkForNewJobs = (jobs) => {
-    const newNotifications = [];
-    alerts.forEach((alert) => {
-      jobs.forEach((job) => {
-        if (
-          (alert.role &&
-            job.jobRole.toLowerCase().includes(alert.role.toLowerCase())) ||
-          (alert.companyName &&
-            job.companyName
-              .toLowerCase()
-              .includes(alert.companyName.toLowerCase()))
-        ) {
-          newNotifications.push(
-            `${job.companyName} posted a new ${job.jobRole} position (${job.employmentType}) in ${job.location}`
-          );
-        }
-      });
-    });
-    setNotifications((prevNotifications) => [
-      ...new Set([...prevNotifications, ...newNotifications]),
-    ]);
+    const newNotifications = jobs.filter(job => 
+      alerts.some(alert => 
+        (alert.role && job.jobRole.toLowerCase().includes(alert.role.toLowerCase())) ||
+        (alert.companyName && job.companyName.toLowerCase().includes(alert.companyName.toLowerCase()))
+      )
+    ).map(job => `${job.companyName} posted a new ${job.jobRole} position (${job.employmentType}) in ${job.location}`);
+
+    setNotifications(prevNotifications => [...new Set([...prevNotifications, ...newNotifications])]);
   };
 
   const handleSetPreferences = () => {
-    if (
-      !preferences.role &&
-      !preferences.location &&
-      !preferences.employmentType &&
-      !preferences.companyName
-    ) {
+    if (Object.values(preferences).every(val => !val)) {
       setFormError("Please fill in at least one field");
       return;
     }
     setFormError("");
-    const newAlert = {
-      id: Date.now(),
-      ...preferences,
-    };
-    setAlerts((prevAlerts) => [newAlert, ...prevAlerts]);
-    setPreferences({
-      role: "",
-      location: "",
-      employmentType: "",
-      companyName: "",
-    });
+    const newAlert = { id: Date.now(), ...preferences };
+    setAlerts(prevAlerts => [newAlert, ...prevAlerts]);
+    setPreferences({ role: "", location: "", employmentType: "", companyName: "" });
   };
 
   const removeAlert = (id) => {
-    setAlerts((prevAlerts) => prevAlerts.filter((alert) => alert.id !== id));
+    setAlerts(prevAlerts => prevAlerts.filter(alert => alert.id !== id));
   };
 
-  const clearAllAlerts = () => {
-    setAlerts([]);
-  };
-
-  const clearAllNotifications = () => {
-    setNotifications([]);
-  };
+  const clearAllAlerts = () => setAlerts([]);
+  const clearAllNotifications = () => setNotifications([]);
 
   return (
     <Container>
       <FormBellContainer>
         <SetPreferencesForm>
           <h2>Set Job Alerts</h2>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSetPreferences();
-            }}
-          >
+          <form onSubmit={(e) => { e.preventDefault(); handleSetPreferences(); }}>
             <InputFieldsContainer>
               <FormGroup>
                 <label htmlFor="role">Preferred Role</label>
                 <Select
                   id="role"
-                  value={roleOptions.find(
-                    (option) => option.value === preferences.role
-                  )}
-                  onChange={(selectedOption) =>
-                    setPreferences({ ...preferences, role: selectedOption.value })
-                  }
+                  value={roleOptions.find(option => option.value === preferences.role)}
+                  onChange={(selectedOption) => setPreferences({ ...preferences, role: selectedOption.value })}
                   options={roleOptions}
                   placeholder="Select a role"
                 />
               </FormGroup>
               <FormGroup>
                 <label htmlFor="companyName">Company Name</label>
-                <input
+                <StyledInput
                   id="companyName"
                   type="text"
                   value={preferences.companyName}
-                  onChange={(e) =>
-                    setPreferences({
-                      ...preferences,
-                      companyName: e.target.value,
-                    })
-                  }
+                  onChange={(e) => setPreferences({ ...preferences, companyName: e.target.value })}
                   placeholder="Enter company name"
                 />
               </FormGroup>
               <FormGroup>
                 <label htmlFor="location">Location Type</label>
-                <select
+                <StyledSelect
                   id="location"
                   value={preferences.location}
-                  onChange={(e) =>
-                    setPreferences({ ...preferences, location: e.target.value })
-                  }
+                  onChange={(e) => setPreferences({ ...preferences, location: e.target.value })}
                 >
                   <option value="">Select a location type</option>
                   <option value="Hybrid">Hybrid</option>
                   <option value="On-site">On-site</option>
                   <option value="Remote">Remote</option>
-                </select>
+                </StyledSelect>
               </FormGroup>
               <FormGroup>
                 <label htmlFor="employmentType">Employment Type</label>
-                <select
+                <StyledSelect
                   id="employmentType"
                   value={preferences.employmentType}
-                  onChange={(e) =>
-                    setPreferences({
-                      ...preferences,
-                      employmentType: e.target.value,
-                    })
-                  }
+                  onChange={(e) => setPreferences({ ...preferences, employmentType: e.target.value })}
                 >
                   <option value="">Select employment type</option>
                   <option value="Full-time">Full-time</option>
                   <option value="Part-time">Part-time</option>
                   <option value="Flexible">Flexible</option>
                   <option value="Contract">Contract</option>
-                </select>
+                </StyledSelect>
               </FormGroup>
-
-              {formError && <p>{formError}</p>}
-              <button type="submit">Set Alert</button>
+              {formError && <FormError>{formError}</FormError>}
+              <StyledButton type="submit">Set Alert</StyledButton>
             </InputFieldsContainer>
           </form>
         </SetPreferencesForm>
 
         <BellIconContainer>
-          <Bell
-            size={24}
-            onClick={() => setShowAlerts(!showAlerts)}
-          />
+          <Bell size={24} onClick={() => setShowAlerts(!showAlerts)} />
           {notifications.length > 0 && (
-            <span>{notifications.length}</span>
+            <NotificationBadge>{notifications.length}</NotificationBadge>
           )}
         </BellIconContainer>
         {showAlerts && (
@@ -200,12 +168,10 @@ const JobalertsComponent = () => {
             </AlertsPopupHeader>
             <AlertsList>
               {notifications.length === 0 ? (
-                <p>No new job notifications</p>
+                <NoAlertsMessage>No new job notifications</NoAlertsMessage>
               ) : (
                 notifications.map((notification, index) => (
-                  <PopupAlertItem key={index}>
-                    <p>{notification}</p>
-                  </PopupAlertItem>
+                  <PopupAlertItem key={index}>{notification}</PopupAlertItem>
                 ))
               )}
             </AlertsList>
@@ -221,7 +187,7 @@ const JobalertsComponent = () => {
       <JobAlertsContainer>
         <h2>Job Alerts</h2>
         {alerts.length === 0 ? (
-          <p>No Job Alerts Here</p>
+          <NoAlertsMessage>No Job Alerts Here</NoAlertsMessage>
         ) : (
           alerts.map((alert) => (
             <AlertItem key={alert.id}>
@@ -229,9 +195,12 @@ const JobalertsComponent = () => {
               <p>Company: {alert.companyName || "Any"}</p>
               <p>Location: {alert.location || "Any"}</p>
               <p>Employment Type: {alert.employmentType || "Any"}</p>
-              <button onClick={() => removeAlert(alert.id)}>Remove</button>
+              <StyledButton onClick={() => removeAlert(alert.id)}>Remove</StyledButton>
             </AlertItem>
           ))
+        )}
+        {alerts.length > 0 && (
+          <ClearAllButton onClick={clearAllAlerts}>Clear All Alerts</ClearAllButton>
         )}
       </JobAlertsContainer>
     </Container>
