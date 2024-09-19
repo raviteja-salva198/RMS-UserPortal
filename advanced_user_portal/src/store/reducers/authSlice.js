@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Cookies from 'js-cookie';
+import {useNavigate} from 'react-router-dom';
 
 // Async thunk for logging in a user
 export const loginUser = createAsyncThunk(
@@ -14,6 +16,8 @@ export const loginUser = createAsyncThunk(
       );
       toast.dismiss(toastId);
       toast.success(response.data.message);
+      console.log(response.data);
+      Cookies.set("token" , response.data.token)
       return response.data;
     } catch (error) {
       toast.dismiss(toastId);
@@ -36,7 +40,12 @@ export const logoutUser = createAsyncThunk(
   "auth/logoutUser",
   async (_, { rejectWithValue }) => {
     try {
+      
+      const navigate = useNavigate();
       await axios.post(process.env.REACT_APP_BASEURL + "/user/logout");
+      Cookies.remove("token");
+      navigate("/login");
+
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: "Logout failed" });
     }

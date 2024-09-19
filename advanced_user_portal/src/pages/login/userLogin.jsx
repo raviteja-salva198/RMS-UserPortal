@@ -48,7 +48,7 @@ const UserLoginComponent = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/"); // Redirect to home page after successful login
+      navigate("/registration-form"); // Redirect to home page after successful login
     }
   }, [isLoggedIn, navigate]);
 

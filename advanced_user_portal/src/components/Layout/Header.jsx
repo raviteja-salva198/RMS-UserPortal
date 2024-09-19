@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Bell, Menu, X, } from 'lucide-react';
+import { BsPersonCircle } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../store/reducers/authSlice';
-
 
 const HeaderWrapper = styled.div`
   background-color: #dbdbdb;
@@ -164,6 +164,7 @@ const Header = () => {
             <NavLink to="/application-reports">Application Reports</NavLink>
             <NavLink to="/job-search">Job Search</NavLink>
             <NavLink to="/job-alert">Job Alert</NavLink>
+            <NavLink to="/registration-form">Registration</NavLink>
           </NavDesktop>
         </NavContainer>
 
@@ -175,6 +176,9 @@ const Header = () => {
          { user ? <LoginButton onClick={() => {
           dispatch(logoutUser())
          }}>Logout</LoginButton> : <LoginButton onClick={goToLoginPage}>Login</LoginButton>}
+         <NavLink to="/edit-profile">
+            <BsPersonCircle size={20} />
+          </NavLink>
         </ActionContainer>
 
         <MenuButton onClick={toggleMenu}>
@@ -190,6 +194,7 @@ const Header = () => {
           <MobileNavLink to="/job-search" onClick={toggleMenu}>Job Search</MobileNavLink>
           <MobileNavLink to="/job-alert" onClick={toggleMenu}>Job Alert</MobileNavLink>
           <MobileNavLink to="/notifications" onClick={toggleMenu}>Notifications</MobileNavLink>
+          <MobileNavLink to="/registration-form" onClick={toggleMenu}>Registration</MobileNavLink>
         </NavMobile>
       </HeaderContainer>
     </HeaderWrapper>

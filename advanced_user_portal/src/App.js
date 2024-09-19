@@ -38,9 +38,6 @@ const App = () => {
     (state) => state.auth
   );
 
-  const token = Cookies.get("token");
-  console.log(token)
-
   const Layout = ({ children }) => (
     <>
       <Header />
@@ -49,6 +46,9 @@ const App = () => {
     </>
   );
 
+  const token = Cookies.get("token");
+  const isAuthenticated = !token ? true : false;
+
   return (
     // <Router>
     <>
@@ -56,7 +56,7 @@ const App = () => {
       <Routes>
         <Route path="/signup" element={<UserSignupComponent />} />
         <Route path="/login" element={<UserLoginComponent />} />
-
+        <Route path="/" element={<ProtectedRoute />}>
           <Route path="/" element={<HomePage />} />
           <Route path='/notifications' element={<Notifications />} />
           <Route path="/exam-home" element={<ExamHomePage />} />
@@ -82,8 +82,9 @@ const App = () => {
           <Route path="/job-alert" element={<JobalertsComponent />} />
           <Route path="/edit-profile" element={<ImageUpload />} />
           <Route path="/notification" element={<PushNotification />} />
-
-
+          <Route path="/registration-form" element={<JobApplicationLayout />} />
+          
+        </Route>
         {/* <Route path="*" element={<Navigate to="/login" replace />} /> */}
       </Routes>
       </Layout>
