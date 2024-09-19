@@ -31,11 +31,15 @@ import PushNotification from "./components/pushup-notifications/pushup-notificat
 import JobalertsComponent from './components/JobAlerts';
 import UserLoginComponent from './pages/login/userLogin';
 import UserSignupComponent from './pages/signup/userSignup';
+import Cookies from "js-cookie";
 
 const App = () => {
   const { user, isLoggedIn, status, error } = useSelector(
     (state) => state.auth
   );
+
+  const token = Cookies.get("token");
+  console.log(token)
 
   const Layout = ({ children }) => (
     <>
