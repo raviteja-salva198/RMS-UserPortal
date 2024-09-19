@@ -6,6 +6,7 @@ const multer = require("multer");
 const app = express();
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/user");
+const planRoutes = require("./routes/planRoutes");
 const path = require("path");
 
 dotenv.config();
@@ -34,6 +35,9 @@ app.get("/", (req, res) => {
     message: "Your Server is up and running",
   });
 });
+
+//premium plans
+app.use('/api/v1/plans', planRoutes);
 
 // listener
 app.listen(PORT, () => {

@@ -172,7 +172,7 @@ const Header = () => {
           <NavLink to="/notifications">
             <Bell size={20} />
           </NavLink>
-          <PremiumButton>Premium</PremiumButton>
+          <PremiumButton onClick={() => navigate("/premium-plans")}>Premium</PremiumButton>
          { user ? <LoginButton onClick={() => {
           dispatch(logoutUser())
          }}>Logout</LoginButton> : <LoginButton onClick={goToLoginPage}>Login</LoginButton>}
