@@ -6,6 +6,7 @@ import { BsPersonCircle } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../store/reducers/authSlice';
+import Cookies from 'js-cookie';
 
 const HeaderWrapper = styled.div`
   background-color: #dbdbdb;
@@ -83,10 +84,17 @@ const Header = ({ toggleSidebar }) => {
   const navigate = useNavigate();
   const { user } = useSelector(state => state.auth);
   const dispatch = useDispatch();
+  const token = Cookies.get("token");
 
   const goToLoginPage = () => {
     navigate('/login');
   };
+
+  const handleLogout = () => {
+     Cookies.remove("token");
+     navigate("/login");
+     dispatch(logoutUser())
+  }
 
   return (
     <HeaderWrapper>
@@ -103,9 +111,9 @@ const Header = ({ toggleSidebar }) => {
           <Link to="/notifications">
             <Bell size={20} />
           </Link>
-          <PremiumButton>Premium</PremiumButton>
-          {user ? (
-            <LoginButton onClick={() => dispatch(logoutUser())}>Logout</LoginButton>
+          <PremiumButton onClick={() => navigate("/premium-plans")}>Upgrade</PremiumButton>
+          {token ? (
+            <LoginButton onClick={handleLogout}>Logout</LoginButton>
           ) : (
             <LoginButton onClick={goToLoginPage}>Login</LoginButton>
           )}

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { Home, Briefcase, Award, FileText, Search, Bell } from 'lucide-react';
+import { Home, Briefcase, Award, FileText, Search, Bell, BarChart, FileCheck, FormInput, Edit3 } from 'lucide-react';
+import { PiCertificateLight } from "react-icons/pi";
 
 const SidebarContainer = styled.div`
   width: ${({ isOpen }) => (isOpen ? '250px' : '60px')};
@@ -51,16 +52,16 @@ const SidebarLink = styled(Link)`
 
 const Sidebar = ({ isOpen }) => {
   const location = useLocation();
-
   const menuItems = [
     { path: '/', icon: <Home />, label: 'Home' },
     { path: '/job-search', icon: <Search />, label: 'Job Search' },
     { path: '/job-matching', icon: <Briefcase />, label: 'Job Matching' },
-    { path: '/skill-ranking', icon: <Award />, label: 'Skill Ranking' },
-    { path: '/exam-home', icon: <FileText />, label: 'Certifications' },
+    { path: '/skill-ranking', icon: <BarChart />, label: 'Skill Ranking' },
+    { path: '/exam-home', icon: <Award />, label: 'Certifications' },
     { path: '/job-reports', icon: <FileText />, label: 'Job Reports' },
-    { path: '/application-reports', icon: <FileText />, label: 'Application Reports' },
+    { path: '/application-reports', icon: <FileCheck />, label: 'Application Reports' },
     { path: '/job-alert', icon: <Bell />, label: 'Job Alerts' },
+    { path: '/registration-form', icon: <Edit3 />, label: 'Registration' },
   ];
 
   return (

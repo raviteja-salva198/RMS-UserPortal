@@ -7,6 +7,7 @@ import JobPreference from "../jobPreference/jobPreference";
 import EducationFrom from "../Education/Education";
 import { FormProvider, useForm } from "react-hook-form";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const JobApplicationLayout = () => {
   const [currentFormStep, setCurrentFormStep] = useState(2);
@@ -75,7 +76,7 @@ const JobApplicationLayout = () => {
   //     };
 
   //     const res = await axios.post(
-  //       process.env.REACT_APP_BASEURL + "/user/studentRegistration",
+  //       "http://localhost:23000/api/v1" + "/user/studentRegistration",
   //       {
   //         firstName: step_1.personalInfo.firstName,
   //         lastName: step_1.personalInfo.lastName,
