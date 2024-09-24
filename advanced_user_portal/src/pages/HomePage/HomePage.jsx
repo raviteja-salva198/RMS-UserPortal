@@ -1,17 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { BarChart, Briefcase, GraduationCap } from 'lucide-react';
+import { BarChart, Briefcase, GraduationCap, SearchCheck } from 'lucide-react';
 
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-`
+  padding-top: 20px; // Add padding to account for the fixed header
+`;
 
 const MainContent = styled.main`
   flex-grow: 1;
   padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 `;
 
 const Hero = styled.div`
@@ -100,6 +103,41 @@ const HomePage = () => {
             </FeatureIcon>
             <FeatureTitle>Certification Exams</FeatureTitle>
             <FeatureDescription>Take AI-proctored online exams or schedule offline certifications.</FeatureDescription>
+          </FeatureCard>
+          <FeatureCard to="/exclusive-jobs">
+            <FeatureIcon>
+              <BarChart size={48} />
+            </FeatureIcon>
+            <FeatureTitle>Exclusive Jobs</FeatureTitle>
+            <FeatureDescription>Access exclusive job listings not available elsewhere.</FeatureDescription>
+          </FeatureCard>
+          <FeatureCard to="/job-reports">
+            <FeatureIcon>
+              <Briefcase size={48} />
+            </FeatureIcon>
+            <FeatureTitle>Job Reports</FeatureTitle>
+            <FeatureDescription>Get detailed insights into your job search progress.</FeatureDescription>
+          </FeatureCard>
+          <FeatureCard to="/application-reports">
+            <FeatureIcon>
+              <GraduationCap size={48} />
+            </FeatureIcon>
+            <FeatureTitle>Application Reports</FeatureTitle>
+            <FeatureDescription>Track and analyze your job application performance.</FeatureDescription>
+          </FeatureCard>
+          <FeatureCard to="/job-search">
+            <FeatureIcon>
+              <SearchCheck size={48} />
+            </FeatureIcon>
+            <FeatureTitle>Job Search</FeatureTitle>
+            <FeatureDescription>Find your next career opportunity with our powerful search tools.</FeatureDescription>
+          </FeatureCard>
+          <FeatureCard to="/job-alert">
+            <FeatureIcon>
+              <Briefcase size={48} />
+            </FeatureIcon>
+            <FeatureTitle>Job Alerts</FeatureTitle>
+            <FeatureDescription>Stay updated with personalized job notifications.</FeatureDescription>
           </FeatureCard>
         </FeatureGrid>
       </MainContent>

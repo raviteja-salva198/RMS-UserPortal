@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import styled from 'styled-components';
 import HomePage from './pages/HomePage/HomePage';
 import RankingSystem from './components/SkillRanking/RankingSystem/RankingSystem';
 import JobMatcher from './components/JobMatching/JobMatcher';
@@ -16,6 +17,7 @@ import ExamsAvailable from "./components/CertficationExam/ExamsAvailable/ExamsAv
 import ExamHomePage from "./components/CertficationExam/ExamHomePage/ExamHomePage";
 // import Signup from './components/Auth/signup';
 // import Login from './components/Auth/login';
+import Sidebar from './components/Layout/Sidebar';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import "./App.css";
 import { useSelector } from "react-redux";
@@ -33,17 +35,42 @@ import UserLoginComponent from './pages/login/userLogin';
 import UserSignupComponent from './pages/signup/userSignup';
 import Cookies from "js-cookie";
 
+const AppContainer = styled.div`
+  display: flex;
+`;
+
+const MainContent = styled.div`
+  flex: 1;
+  margin-left: ${({ isSidebarOpen }) => (isSidebarOpen ? '250px' : '60px')};
+  transition: margin-left 0.3s ease;
+  padding: 70px 10px 10px; // Increase top padding to account for the header
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+    padding-top: 90px; // Increase top padding for mobile view
+  }
+`;
+
 const App = () => {
   const { user, isLoggedIn, status, error } = useSelector(
     (state) => state.auth
   );
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   const Layout = ({ children }) => (
-    <>
-      <Header />
-      {children}
-      <Footer />
-    </>
+    <AppContainer>
+      <Header toggleSidebar={toggleSidebar} />
+      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      <MainContent isSidebarOpen={isSidebarOpen}>
+        {children}
+        <Footer />
+      </MainContent>
+    </AppContainer>
   );
 
   const token = Cookies.get("token");
@@ -62,7 +89,7 @@ const App = () => {
           <Route path="/exam-home" element={<ExamHomePage />} />
           <Route path="/skill-ranking" element={<RankingSystem />} />
           <Route path="/job-matching" element={<JobMatcher />} />
-          <Route path='exclusive-jobs' element={<ExamHomePage />} />
+          <Route path='/exclusive-jobs' element={<ExamHomePage />} />
           <Route path="/exams-available" element={<ExamsAvailable />} />
           <Route path="/register/:examId" element={<RegistrationForm />} />
           <Route path="/exam-details/:examId" element={<ExamDetails />} />
