@@ -102,7 +102,6 @@ const Header = ({ toggleSidebar }) => {
         <ActionContainer>
           <Link to="/notifications">
             <Bell size={20} />
-<<<<<<< HEAD
           </Link>
           <PremiumButton>Premium</PremiumButton>
           {user ? (
@@ -111,16 +110,6 @@ const Header = ({ toggleSidebar }) => {
             <LoginButton onClick={goToLoginPage}>Login</LoginButton>
           )}
           <Link to="/edit-profile">
-=======
-          </Link>
-          <PremiumButton>Premium</PremiumButton>
-          {user ? (
-            <LoginButton onClick={() => dispatch(logoutUser())}>Logout</LoginButton>
-          ) : (
-            <LoginButton onClick={goToLoginPage}>Login</LoginButton>
-          )}
-          <Link to="/edit-profile">
->>>>>>> 9175d83cc92621692fec8ca00b110eb7aaaad529
             <BsPersonCircle size={20} />
           </Link>
         </ActionContainer>
