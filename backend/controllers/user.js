@@ -7,10 +7,8 @@ const User = require("../model/User");
 const Job = require("../model/job");
 const Announcement = require("../model/announcement");
 const otpGenerator = require("otp-generator");
-
 const jobSearchModal = require("../model/jobSearch");
 const applicationModal = require("../model/application");
-
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 

@@ -15,6 +15,7 @@ import ExamAdministration from "./components/CertficationExam/ExamAdministration
 import ResultsFeedback from "./components/CertficationExam/ResultsFeedback/ResultsFeedback";
 import ExamsAvailable from "./components/CertficationExam/ExamsAvailable/ExamsAvailable";
 import ExamHomePage from "./components/CertficationExam/ExamHomePage/ExamHomePage";
+import PremiumPlans from './pages/PremiumPlans/PremiumPlans';
 // import Signup from './components/Auth/signup';
 // import Login from './components/Auth/login';
 import Sidebar from './components/Layout/Sidebar';
@@ -33,7 +34,6 @@ import PushNotification from "./components/pushup-notifications/pushup-notificat
 import JobalertsComponent from './components/JobAlerts';
 import UserLoginComponent from './pages/login/userLogin';
 import UserSignupComponent from './pages/signup/userSignup';
-import Cookies from "js-cookie";
 
 const AppContainer = styled.div`
   display: flex;
@@ -73,9 +73,6 @@ const App = () => {
     </AppContainer>
   );
 
-  const token = Cookies.get("token");
-  const isAuthenticated = !token ? true : false;
-
   return (
     // <Router>
     <>
@@ -110,7 +107,8 @@ const App = () => {
           <Route path="/edit-profile" element={<ImageUpload />} />
           <Route path="/notification" element={<PushNotification />} />
           <Route path="/registration-form" element={<JobApplicationLayout />} />
-          
+          <Route path="/premium-plans" element={<PremiumPlans />} />
+        
         </Route>
         {/* <Route path="*" element={<Navigate to="/login" replace />} /> */}
       </Routes>
