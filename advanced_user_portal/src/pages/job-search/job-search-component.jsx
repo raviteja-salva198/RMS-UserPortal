@@ -114,7 +114,7 @@ const JobSearch = () => {
         setApiStatus(apiStatusConstants.inProgress);
         const queryString = new URLSearchParams(search).toString();
         const response = await fetch(
-          "http://localhost:23000/api/v1" + `/user/jobs?${queryString}`
+          process.env.REACT_APP_BASEURL + `/user/jobs?${queryString}`
         );
         const data = await response.json();
         setJobs(data);

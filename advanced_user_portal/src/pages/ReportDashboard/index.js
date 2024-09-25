@@ -71,7 +71,7 @@ const ReportDashboard = () => {
         setApiStatus(apiStatusConstants.inProgress);
         const { dateRange, jobPosition, status } = newFilters;
         const response = await axios.get(
-          "http://localhost:23000/api/v1" + "/user/applications",
+          process.env.REACT_APP_BASEURL + "/user/applications",
           {
             params: {
               start: dateRange.start,
