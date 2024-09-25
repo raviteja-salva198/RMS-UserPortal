@@ -15,7 +15,7 @@ export const PlanProvider = ({ children }) => {
     const fetchCurrentPlan = async () => {
       if (!userId) return;
       try {
-        const response = await axios.get(`${REACT_APP_BASEURL}/plans/current-plan/${userId}`);
+        const response = await axios.get(`${process.env.REACT_APP_BASEURL}/plans/current-plan/${userId}`);
         setCurrentPlan(response.data.planName);
       } catch (err) {
         console.error('Error fetching current plan:', err);
@@ -28,7 +28,7 @@ export const PlanProvider = ({ children }) => {
   const buyPlan = async (planName) => {
     if (!userId) return;
     try {
-      await axios.post(`${REACT_APP_BASEURL}/plans/buy-plan/${userId}`, { planName, email: "ravitejasalva@gmail.com" });
+      await axios.post(`${process.env.REACT_APP_BASEURL}/plans/buy-plan/${userId}`, { planName, email: "ravitejasalva@gmail.com" });
       setCurrentPlan(planName);
     } catch (err) {
       console.error('Error buying plan:', err);
