@@ -80,7 +80,7 @@ const App = () => {
             <Layout>
               <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path='/notifications' element={<Notifications />} />
+                <Route path='/notification' element={<Notifications />} />
                 <Route path="/exam-home" element={<ExamHomePage />} />
                 <Route path="/skill-ranking" element={<RankingSystem />} />
                 <Route path="/job-matching" element={<JobMatcher />} />
@@ -100,7 +100,7 @@ const App = () => {
                 <Route path="/job-search" element={<JobSearch />} />
                 <Route path="/job-alert" element={<JobalertsComponent />} />
                 <Route path="/edit-profile" element={<ImageUpload />} />
-                <Route path="/notification" element={<PushNotification />} />
+                <Route path="/notifications" element={<PushNotification />} />
                 <Route path="/registration-form" element={<JobApplicationLayout />} />
                 <Route path="/premium-plans" element={<PremiumPlans />} />
               </Routes>
