@@ -58,7 +58,8 @@ const SignUpForm = ({ setIsOtpSend, setSignUpData }) => {
     setLoading(true);
     const toastId = toast.loading("Please wait...");
     try {
-      await axios.post(`http://localhost:23000/api/v1/user/otp`, {
+      //process.env.REACT_APP_BASEURL
+      await axios.post(`${process.env.REACT_APP_BASEURL}/user/otp`, {
         email: data.email,
       });
       // OTP sent successfully

@@ -11,6 +11,7 @@ const jobSearchModal = require("../model/jobSearch");
 const applicationModal = require("../model/application");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const {sendOTP} = require("../utils/emailService")
 
 // utils
 const mailSender = require("../utils/mailSender");
@@ -493,6 +494,8 @@ exports.sendOtp = async (req, res) => {
 
     // Log or save the OTP to your database
     console.log(`OTP ${otp} sent to ${email}`);
+    
+    await sendOTP(email , otp);
 
     return res.status(201).json({
       success: true,
