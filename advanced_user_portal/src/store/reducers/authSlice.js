@@ -11,7 +11,7 @@ export const loginUser = createAsyncThunk(
     const toastId = toast.loading("Please wait ...");
     try {
       const response = await axios.post(
-        process.env.REACT_APP_BASEURL + "/user/login",
+        "http://localhost:23000/api/v1" + "/user/login",
         credentials
       );
       toast.dismiss(toastId);

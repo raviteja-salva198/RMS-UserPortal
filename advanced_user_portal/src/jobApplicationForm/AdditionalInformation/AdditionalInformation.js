@@ -602,9 +602,9 @@ const AdditionalInformation = ({ setCurrentFormStep }) => {
       </div>
 
       <div className="form-group">
-        <label>Resume/CV</label>
+        <label>Resume/CV (G-Drive Link)</label>
         <input
-          type="text"
+          type="url"
           {...register("resume", {
             required: "This is required",
           })}

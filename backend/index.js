@@ -7,6 +7,7 @@ const app = express();
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/user");
 const planRoutes = require("./routes/planRoutes");
+const candidateRoutes = require("./routes/candidateRoutes");
 const path = require("path");
 
 dotenv.config();
@@ -38,6 +39,8 @@ app.get("/", (req, res) => {
 
 //premium plans
 app.use('/api/v1/plans', planRoutes);
+//candidate registration
+app.use('/api/v1/candidates', candidateRoutes);
 
 // listener
 app.listen(PORT, () => {
